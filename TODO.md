@@ -1,0 +1,12 @@
+# TODO
+- [ ] Push to GitHub `pacecut` and import into Vercel.
+- [ ] Set real domain and `NEXT_PUBLIC_SITE_URL`.
+- [ ] Replace placeholder contact email in `src/app/contact/page.tsx`.
+- [ ] Google AdSense: apply, add script, fill `AdSlot` components, add a consent banner if required.
+- [ ] Real affiliate links in `AffiliateSlot` (mics, lights, teleprompter gear). Label as affiliate.
+- [ ] Payments for Pro (Stripe or Lemon Squeezy), then flip `isPremium` per user/license.
+- [ ] Privacy-friendly analytics (Plausible or Umami) in `Analytics.tsx`.
+- [ ] Add OG image, favicon and app icons.
+- [ ] Verify platform limits on caption and landing pages.
+- [ ] Manual QA on iOS Safari and Android Chrome (teleprompter, recording).
+- [ ] Review progress at the 60 to 90 day checkpoint.

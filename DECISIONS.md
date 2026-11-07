@@ -1,0 +1,17 @@
+# Decisions
+- **Next.js 16 / Tailwind 4 / Vitest** for unit tests. Installed with `--legacy-peer-deps` due to a peer conflict.
+- **Word** = a whitespace-separated token containing a letter or digit. Hyphenated words and contractions count as one.
+- **Pauses** default: comma 0.25s, full stop 0.5s, question 0.6s, paragraph +0.8s. Adjustable in the UI.
+- **Cut-off**: a word fits if its spoken part ends within the limit (its trailing pause is not required to fit).
+- **Sections**: lines starting with `# Hook`, `# Body`, `# CTA` (1-3 hashes). Heading lines are not spoken. "Share" is seconds divided by the time limit (budget).
+- **Trimming**: filler list in `engine.ts`; immediate repeated words are auto-removable; repeated 3-word phrases (3+ uses) and sentences over 30 words are advisory only.
+- **Undo** is a text history stack. The running "saved" total is recomputed from before/after timings.
+- **Dark mode** follows the system preference (no toggle).
+- **Teleprompter speed** is derived from content height and word count so scroll speed matches the chosen WPM. Reading line sits at 40% of the screen.
+- **Premium**: `isPremium = false`. Locked controls show a PRO badge and an upgrade message. Recording uses MediaRecorder and downloads a .webm locally.
+- **No script persistence**: no localStorage, cookies or network calls for script text.
+- **Fonts**: system font stack to avoid build-time network fetches.
+- **Platform limits** (captions, Reels length) are commonly cited values and may change. Pages say to verify.
+- **Contact email** is a placeholder (`hello@example.com`).
+- **Site URL** defaults to `https://pacecut.vercel.app`, overridable by `NEXT_PUBLIC_SITE_URL`.
+- **Git push** could not be done: GitHub was not linked to the session. Project was built locally and delivered as a zip.
