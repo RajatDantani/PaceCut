@@ -31,15 +31,24 @@ export function CtaToHero({ text = "Paste a full script into PaceCut" }: { text?
 }
 
 export function WordsToMinutes() {
-  const [words, setWords] = useState(500);
+  const [text, setText] = useState("");
+  const [manual, setManual] = useState(500);
   const [wpm, setWpm] = useState(150);
+  const fromText = text.trim().length > 0;
+  const words = fromText ? countWords(text) : manual;
   const secs = (words / wpm) * 60;
   return (
     <div className="space-y-4">
       <div className="card space-y-3">
-        <label className="flex flex-col gap-1 font-semibold">Number of words
-          <input type="number" min={0} className="field" value={words} onChange={(e) => setWords(Math.max(0, Number(e.target.value) || 0))} />
+        <label htmlFor="wtm-text" className="flex flex-col gap-1 font-semibold">Paste your text (optional)
+          <textarea id="wtm-text" className="field min-h-[120px] font-normal" rows={5} value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste your script or speech and we will count the words for you..." />
         </label>
+        <p className="text-sm text-muted">🔒 Your text never leaves your device.</p>
+        <label className="flex flex-col gap-1 font-semibold">
+          {fromText ? "Words counted from your text" : "Or enter a number of words"}
+          <input type="number" min={0} className="field" disabled={fromText} value={words} onChange={(e) => setManual(Math.max(0, Number(e.target.value) || 0))} />
+        </label>
+        {fromText && <button className="btn !min-h-[36px] !py-1 text-sm" onClick={() => { setManual(words); setText(""); }}>Clear text and enter a number instead</button>}
         <SpeedPicker wpm={wpm} setWpm={setWpm} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2" aria-live="polite">
