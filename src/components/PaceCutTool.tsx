@@ -1,5 +1,6 @@
 "use client";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { getSharedScript, setSharedScript } from "@/lib/sharedScript";
 import {
   DEFAULT_PAUSES, NO_PAUSES, PLATFORM_PRESETS, SAMPLE_SCRIPT, SPEED_PRESETS,
   applyAll, applySuggestion, countWords, findCutOff, findSuggestions, formatDiff, formatDuration,
@@ -10,7 +11,8 @@ import { Teleprompter } from "./Teleprompter";
 type Props = { initialSeconds?: number; initialPresetId?: string; compact?: boolean };
 
 export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }: Props) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(() => getSharedScript());
+  useEffect(() => { setSharedScript(text); }, [text]);
   const [history, setHistory] = useState<string[]>([]);
   const [limit, setLimit] = useState(initialSeconds);
   const [presetId, setPresetId] = useState<string | null>(initialPresetId);

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { getSharedScript, setSharedScript } from "@/lib/sharedScript";
 import { countChars, countWords, formatDuration, speakingSeconds, wordsForDuration, calcWpm, findCutOff, DEFAULT_PAUSES, NO_PAUSES, SPEED_PRESETS } from "@/lib/engine";
 
 function Big({ label, value, sub }: { label: string; value: string; sub?: string }) {
@@ -31,7 +32,8 @@ export function CtaToHero({ text = "Paste a full script into PaceCut" }: { text?
 }
 
 export function WordsToMinutes() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(() => getSharedScript());
+  useEffect(() => { setSharedScript(text); }, [text]);
   const [manual, setManual] = useState(500);
   const [wpm, setWpm] = useState(150);
   const fromText = text.trim().length > 0;
@@ -71,7 +73,8 @@ export function WordsToMinutes() {
 }
 
 export function SpeechTimeCalculator() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(() => getSharedScript());
+  useEffect(() => { setSharedScript(text); }, [text]);
   const [wpm, setWpm] = useState(150);
   const [pauses, setPauses] = useState(true);
   const p = pauses ? DEFAULT_PAUSES : NO_PAUSES;
@@ -180,7 +183,8 @@ export function CaptionCounter() {
 }
 
 export function ElevatorPitchTimer() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(() => getSharedScript());
+  useEffect(() => { setSharedScript(text); }, [text]);
   const [target, setTarget] = useState(30);
   const [wpm, setWpm] = useState(150);
   const cut = findCutOff(text, target, wpm, DEFAULT_PAUSES);

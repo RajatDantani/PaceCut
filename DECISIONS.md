@@ -15,3 +15,4 @@
 - **Contact email** is a placeholder (`hello@example.com`).
 - **Site URL** defaults to `https://pacecut.vercel.app`, overridable by `NEXT_PUBLIC_SITE_URL`.
 - **Git push** could not be done: GitHub was not linked to the session. Project was built locally and delivered as a zip.
+- **Carry text between tools**: script text is held in a module-level variable (`src/lib/sharedScript.ts`) so it survives client-side navigation. It is never persisted (no localStorage, cookies, URL or network) and clears on refresh.
