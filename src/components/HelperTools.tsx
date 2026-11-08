@@ -108,7 +108,7 @@ const HOOK_LIMITS = [
 
 export function HookLengthChecker() {
   const [text, setText] = useState("");
-  const [wpm, setWpm] = useState(160);
+  const [wpm, setWpm] = useState(150);
   const words = countWords(text);
   const secs = speakingSeconds(text, wpm, DEFAULT_PAUSES);
   return (
