@@ -44,7 +44,7 @@ export function WordsToMinutes() {
       </div>
       <div className="grid gap-3 sm:grid-cols-2" aria-live="polite">
         <Big label="Speaking time" value={formatDuration(secs)} sub={`${(secs / 60).toFixed(2)} minutes`} />
-        <Big label="Reading aloud at" value={`${wpm} WPM`} sub={`${Math.round(words / 130)} to ${Math.round(words / 170)} min at 130-170 WPM`} />
+        <Big label="Reading aloud at" value={`${wpm} WPM`} sub={`${(words / 170).toFixed(1)} to ${(words / 130).toFixed(1)} min at 130-170 WPM`} />
       </div>
       <div className="card">
         <h3 className="font-semibold">Quick reference at {wpm} WPM</h3>
