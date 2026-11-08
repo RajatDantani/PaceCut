@@ -107,7 +107,7 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
             {(["Hook", "Body", "CTA"] as const).map((n) => (
               <button key={n} className="btn !min-h-[36px] !py-1" onClick={() => tagSection(n)} title={`Insert a "# ${n}" marker line`}>+ {n}</button>
             ))}
-            <button className="btn !min-h-[36px] !py-1" onClick={undo} disabled={!history.length} title="Undo the last change (markers, trimming, clear)">↶ Undo</button>
+            <button className="btn !min-h-[36px] !py-1" onClick={undo} disabled={!history.length} title="Undo the last change (markers, trimming, clear)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5" /><path d="M4 9h10a6 6 0 0 1 0 12h-3" /></svg>Undo</button>
             <button className="btn !min-h-[36px] !py-1" onClick={() => setTextTracked("")} disabled={!text}>Clear</button>
           </div>
         </div>
