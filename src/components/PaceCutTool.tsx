@@ -62,9 +62,30 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
   }
   function tagSection(name: "Hook" | "Body" | "CTA") {
     const ta = taRef.current;
-    const pos = ta ? ta.selectionStart : 0;
+    const pos = ta ? ta.selectionStart : text.length;
     const lineStart = text.lastIndexOf("\n", pos - 1) + 1;
-    setTextTracked(text.slice(0, lineStart) + `# ${name}\n` + text.slice(lineStart));
+    let lineEnd = text.indexOf("\n", pos);
+    if (lineEnd === -1) lineEnd = text.length;
+    const line = text.slice(lineStart, lineEnd);
+    const marker = `# ${name}`;
+    let next: string;
+    let caret: number;
+    if (/^\s*#{1,3}\s*(hook|body|cta)\b/i.test(line)) {
+      // caret is on a marker line: change that marker instead of adding another
+      const rest = line.replace(/^\s*#{1,3}\s*(hook|body|cta)\b[:\s-]*/i, "");
+      next = text.slice(0, lineStart) + marker + (rest ? " " + rest : "") + text.slice(lineEnd);
+      caret = lineStart + marker.length;
+    } else {
+      next = text.slice(0, lineStart) + marker + "\n" + text.slice(lineStart);
+      caret = lineStart + marker.length + 1;
+    }
+    setTextTracked(next);
+    requestAnimationFrame(() => {
+      const el = taRef.current;
+      if (!el) return;
+      el.focus();
+      el.setSelectionRange(caret, caret);
+    });
   }
   function pickPreset(id: string, seconds: number) {
     setPresetId(id);
@@ -89,6 +110,7 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
             <button className="btn !min-h-[36px] !py-1" onClick={() => setTextTracked("")} disabled={!text}>Clear</button>
           </div>
         </div>
+        <p className="mt-1 text-sm text-muted">Tap where a section starts, then tap <strong>+ Hook</strong>, <strong>+ Body</strong> or <strong>+ CTA</strong>. Tap on an existing marker to change its type.</p>
         <textarea
           id="script"
           ref={taRef}
