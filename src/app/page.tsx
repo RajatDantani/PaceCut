@@ -12,9 +12,24 @@ const FAQ = [
 export default function Home() {
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
-      <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">See the exact word where your time runs out.</h1>
-      <p className="mt-3 text-lg text-muted">Paste your script, pick a platform and speed, and PaceCut shows how long it takes to say, where it gets cut off, and what to trim. Free, instant and private.</p>
-      <p className="mt-2 inline-block rounded-full border border-border px-3 py-1 text-sm font-semibold">🔒 Your script never leaves your device.</p>
+      <div className="hero-glow">
+        <span className="chip pop">🔒 Your script never leaves your device</span>
+        <h1 className="pop mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+          See the <span className="grad-text">exact word</span> where your time runs out.
+        </h1>
+        <p className="pop mt-4 max-w-2xl text-lg text-muted">Paste your script, pick a platform and speed, and PaceCut shows how long it takes to say, where it gets cut off, and what to trim. Free, instant, no AI.</p>
+        <div className="pop mt-5 flex flex-wrap gap-2 text-sm">
+          <span className="chip">⚡ Instant</span>
+          <span className="chip">🎯 Exact cut-off</span>
+          <span className="chip">🎬 Free teleprompter</span>
+        </div>
+        <div className="card pop mt-6 text-base leading-relaxed sm:text-lg" aria-label="Example of the cut-off view">
+          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">Live example · 15s limit · 150 WPM</div>
+          Stop scrolling. You are probably wasting ten seconds of every video, and you do not even know it.
+          <span className="cut-marker"><span className="snip" aria-hidden="true">✂</span> 0:15</span>
+          <span className="opacity-35"> So basically, most creators write a script, hit record, and just hope it fits.</span>
+        </div>
+      </div>
       <div className="mt-6"><PaceCutTool /></div>
       <AdSlot id="home-below-tool" />
       <section className="prose-pc mt-8">

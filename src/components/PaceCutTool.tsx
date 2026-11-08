@@ -151,20 +151,19 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
       </div>
 
       <div className="card" aria-live="polite">
-        <div className="grid gap-3 sm:grid-cols-4">
-          <Stat label="Estimated time" value={formatDuration(cut.total)} />
-          <Stat label="Limit" value={formatDuration(limit)} />
-          <Stat label="Words" value={String(words)} />
-          <div>
-            <div className="text-xs uppercase tracking-wide text-muted">Result</div>
-            <div className={`text-2xl font-extrabold ${statusColor}`}>
-              {!words ? "Add a script" : cut.fits ? "Fits ✓" : "Too long"}
+        <div className="flex flex-wrap items-center gap-5">
+          <Ring pct={Math.min(1, cut.total / Math.max(1, limit))} over={!cut.fits && words > 0} empty={!words} label={formatDuration(cut.total)} />
+          <div className="grid flex-1 gap-3 sm:grid-cols-3">
+            <Stat label="Limit" value={formatDuration(limit)} />
+            <Stat label="Words" value={String(words)} />
+            <div>
+              <div className="text-xs uppercase tracking-wide text-muted">Result</div>
+              <div className={`text-2xl font-extrabold ${statusColor}`}>
+                {!words ? "Add a script" : cut.fits ? "Fits ✓" : "Too long"}
+              </div>
+              {words > 0 && <div className={`text-sm ${statusColor}`}>{formatDiff(cut.diff)}</div>}
             </div>
-            {words > 0 && <div className={`text-sm ${statusColor}`}>{formatDiff(cut.diff)}</div>}
           </div>
-        </div>
-        <div className="mt-3 h-3 overflow-hidden rounded-full bg-border" role="img" aria-label={`Script uses ${Math.round((cut.total / Math.max(1, limit)) * 100)}% of the time limit`}>
-          <div className={`h-full ${cut.fits ? "bg-green-500" : "bg-red-500"}`} style={{ width: `${Math.min(100, (cut.total / Math.max(1, limit)) * 100)}%` }} />
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           <button className="btn btn-primary" disabled={!words} onClick={() => setTeleprompter(true)}>▶ Open teleprompter</button>
@@ -172,7 +171,7 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
       </div>
 
       {words > 0 && (
-        <div className="card">
+        <div className="card pop">
           <h2 className="font-semibold">Exact cut-off view</h2>
           <p className="text-sm text-muted">{cut.fits ? "Everything fits inside your limit." : `Time runs out at the red marker (${formatDuration(limit)}). Text after it is dimmed.`}</p>
           <div className="mt-3 whitespace-pre-wrap text-lg leading-relaxed">
@@ -239,6 +238,24 @@ export function PaceCutTool({ initialSeconds = 60, initialPresetId = "tiktok" }:
       )}
 
       {teleprompter && <Teleprompter text={spoken.trim()} wpm={wpm} onClose={() => setTeleprompter(false)} />}
+    </div>
+  );
+}
+
+function Ring({ pct, over, empty, label }: { pct: number; over: boolean; empty: boolean; label: string }) {
+  const r = 46;
+  const c = 2 * Math.PI * r;
+  const color = empty ? "var(--border)" : over ? "#ef4444" : "#22c55e";
+  return (
+    <div className="relative h-28 w-28 shrink-0" role="img" aria-label={`Script uses ${Math.round(pct * 100)}% of the time limit`}>
+      <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
+        <circle cx="60" cy="60" r={r} fill="none" strokeWidth="10" className="ring-track" />
+        <circle cx="60" cy="60" r={r} fill="none" strokeWidth="10" strokeLinecap="round" className="ring-bar" stroke={color} strokeDasharray={c} strokeDashoffset={c * (1 - (empty ? 0 : pct))} />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="text-xl font-extrabold tabular-nums">{label}</div>
+        <div className="text-[10px] uppercase tracking-wide text-muted">estimated</div>
+      </div>
     </div>
   );
 }
