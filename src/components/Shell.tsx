@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NAV, PLATFORM_PAGES } from "@/lib/site";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   return (
@@ -8,13 +9,14 @@ export function Header() {
         <Link href="/" className="text-xl font-extrabold tracking-tight">
           Pace<span className="text-accent">Cut</span>
         </Link>
-        <nav aria-label="Main" className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        <nav aria-label="Main" className="order-3 flex w-full flex-wrap gap-x-4 gap-y-1 text-sm lg:order-2 lg:w-auto">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} className="py-2 text-muted hover:text-foreground">
               {n.label}
             </Link>
           ))}
         </nav>
+        <div className="order-2 lg:order-3"><ThemeToggle /></div>
       </div>
     </header>
   );

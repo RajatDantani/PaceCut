@@ -6,7 +6,7 @@
 - **Sections**: lines starting with `# Hook`, `# Body`, `# CTA` (1-3 hashes). Heading lines are not spoken. "Share" is seconds divided by the time limit (budget).
 - **Trimming**: filler list in `engine.ts`; immediate repeated words are auto-removable; repeated 3-word phrases (3+ uses) and sentences over 30 words are advisory only.
 - **Undo** is a text history stack. The running "saved" total is recomputed from before/after timings.
-- **Dark mode** follows the system preference (no toggle).
+- **Dark mode** follows the system preference by default; a sun/moon toggle (top right) overrides it. Only the theme choice is saved in localStorage.
 - **Teleprompter speed** is derived from content height and word count so scroll speed matches the chosen WPM. Reading line sits at 40% of the screen.
 - **Premium**: `isPremium = false`. Locked controls show a PRO badge and an upgrade message. Recording uses MediaRecorder and downloads a .webm locally.
 - **No script persistence**: no localStorage, cookies or network calls for script text.
